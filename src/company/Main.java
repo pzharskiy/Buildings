@@ -20,10 +20,10 @@ public class Main {
             building.getRoom(1).add(new Lightbulb(250));
             building.getRoom(1).add(new Lightbulb(200));
             building.getRoom(1).add(new Lightbulb(200));
-            building.getRoom(2).add(new Lightbulb(3000));
+            building.getRoom(2).add(new Lightbulb(30));
             building.getRoom(2).add(new Lightbulb(500));
             building.getRoom(3).add(new Lightbulb(200));
-            building.getRoom(3).add(new Lightbulb(900));
+            building.getRoom(3).add(new Lightbulb(9000));
             building.getRoom(4).add(new Lightbulb(100));
             building.getRoom(4).add(new Lightbulb(100));
 
@@ -38,9 +38,11 @@ public class Main {
             building.getRoom(4).change(new Cupboard("Шкафчик", 7), new Cupboard("Шкафище", 9));
             //building.getRoom(4).delete(new Lightbulb(150));
              building.getRoom(4).change(new Lightbulb(100),new Lightbulb(200));
-            // building.deleteRoom(4);
-            building.describe();
+            //building.deleteRoom(4);
             building.validate();
+            System.out.println(building.isValid());
+            building.describe();
+
         }
         catch (LackOfFurnitureException | LackOfLightbulbException | LackOfRoomException |InvalidSquareOfRoomException ex)
         {

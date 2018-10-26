@@ -15,7 +15,7 @@ public class Room implements RoomInterface {
     private int illumination;
     private int windows;
     private int occupiedArea;
-    boolean valid = false;
+    private boolean valid;
 
     private List<Furniture> furnitures = new ArrayList<Furniture>();
     private List<Lightbulb> lightbulbs = new ArrayList<Lightbulb>();
@@ -26,6 +26,7 @@ public class Room implements RoomInterface {
             this.square = square;
             this.windows = countOfWindows;
             this.illumination = countOfWindows * 700;
+            this.valid = false;
         } else
             throw new InvalidSquareOfRoomException("Площадь вашей комнаты должна быть положительным числом. Пожалуйста, проверьте корректность введённых данных");
     }
@@ -123,28 +124,28 @@ public class Room implements RoomInterface {
 
     @Override
     public void validate() {
-        try {
-            if (!checkOccupancy()) {
-                valid = false;
-                throw new SpaceUsageTooMuchException("Превышена допустимая заполненность помещения (более 70% площади) в комнате №" + number);
-            } else {
-                valid = true;
+        if ((!checkOccupancy()) || (!checkIllumination()) )
+        {
+            valid=false;
+            try {
+                if (!checkOccupancy()) {
+                    throw new SpaceUsageTooMuchException("Превышена допустимая заполненность помещения (более 70% площади) в комнате №" + number);
+                }
+            } catch (SpaceUsageTooMuchException ex) {
+                System.err.println(ex.toString());
             }
-        } catch (SpaceUsageTooMuchException ex) {
-            System.err.println(ex.toString());
-        }
 
-        try {
-            if (!checkIllumination()) {
-                valid = false;
-                throw new IlluminanceTooMuchException("Превышена допустимая светимость в помещении (более 4000 лк) в комнате №" + number);
-            } else {
-                valid = true;
+            try {
+                if (!checkIllumination()) {
+
+                    throw new IlluminanceTooMuchException("Превышена допустимая светимость в помещении (более 4000 лк) в комнате №" + number);
+                }
+            } catch (IlluminanceTooMuchException e) {
+                System.err.println(e.toString());
             }
-        } catch (IlluminanceTooMuchException e) {
-            System.err.println(e.toString());
-        }
 
+        }
+        else {valid=true;}
     }
 
     @Override

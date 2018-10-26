@@ -54,6 +54,7 @@ public class Building implements BuildingInterface {
         System.out.println("Здание " + street + " " + number);
         for (Room room : rooms
                 ) {
+            System.out.println(room.isValid());
             room.describe();
         }
     }
