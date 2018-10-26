@@ -131,8 +131,8 @@ public class Room implements RoomInterface {
                 if (!checkOccupancy()) {
                     throw new SpaceUsageTooMuchException("Превышена допустимая заполненность помещения (более 70% площади) в комнате №" + number);
                 }
-            } catch (SpaceUsageTooMuchException ex) {
-                System.err.println(ex.toString());
+            } catch (SpaceUsageTooMuchException e) {
+                System.err.println(e.toString());
             }
 
             try {

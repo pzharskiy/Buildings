@@ -54,7 +54,6 @@ public class Building implements BuildingInterface {
         System.out.println("Здание " + street + " " + number);
         for (Room room : rooms
                 ) {
-            System.out.println(room.isValid());
             room.describe();
         }
     }
@@ -71,14 +70,25 @@ public class Building implements BuildingInterface {
 
     @Override
     public void validate() {
+//        Если нам не важна информация обо всех нарушениях, то так:
+//        for (Room room : rooms
+//                ) {
+//            if (!room.isValid()) {
+//                return;
+//            }
+//
+//        }
+//        valid = true;
+
+        //В данном случае мы получим все нарушения
+        boolean someRoomIsInvalid=false;
         for (Room room : rooms
                 ) {
             if (!room.isValid()) {
-                return;
+                someRoomIsInvalid=true;
             }
-
         }
-        valid = true;
+        if (!someRoomIsInvalid) {valid = true;}
     }
 
     @Override

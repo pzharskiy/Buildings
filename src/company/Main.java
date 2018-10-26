@@ -28,7 +28,7 @@ public class Main {
             building.getRoom(4).add(new Lightbulb(100));
 
             building.getRoom(1).add(new Sofa("Потрясающий мягкий диван", 5, 9));
-            building.getRoom(2).add(new Fridge("Современный холодный холодильник", 6));
+            building.getRoom(1).add(new Fridge("Современный холодный холодильник", 6));
             building.getRoom(2).add(new Chair("Стул", 3));
             building.getRoom(2).add(new Cupboard("Вместительный комфортабельный шкафчик", 70));
             building.getRoom(3).add(new Sofa("Мягкий и упругий диван", 20, 24));
@@ -40,7 +40,7 @@ public class Main {
              building.getRoom(4).change(new Lightbulb(100),new Lightbulb(200));
             //building.deleteRoom(4);
             building.validate();
-            System.out.println(building.isValid());
+            System.out.println("Здание полностью соответсвует нормам? " + building.isValid());
             building.describe();
 
         }
