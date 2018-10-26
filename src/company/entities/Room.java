@@ -6,12 +6,13 @@ import company.entities.furnitures.Furniture;
 import company.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Room implements RoomInterface {
     private int number;
     private int square;
-    private int illumination;  // Зачем хранить данную переменную, если она считается при проверке
+    private int illumination;
     private int windows;
     private int occupiedArea;
     boolean valid = false;
@@ -56,8 +57,9 @@ public class Room implements RoomInterface {
     @Override
     public void change(Lightbulb lightbulb, Lightbulb updateLightbulb) throws LackOfFurnitureException {
         if (lightbulbs.contains(lightbulb)) {
+
             lightbulbs.set(lightbulbs.indexOf(lightbulb), updateLightbulb);
-            lightbulbs.remove(lightbulb); //Удаляет дублирущиеся объекты
+            //lightbulbs.remove(lightbulbs.indexOf(updateLightbulb)+1);
         } else {
             throw new LackOfLightbulbException("Запрашиваемый объект не найден или не существует");
         }

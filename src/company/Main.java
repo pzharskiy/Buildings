@@ -25,7 +25,7 @@ public class Main {
             building.getRoom(3).add(new Lightbulb(200));
             building.getRoom(3).add(new Lightbulb(900));
             building.getRoom(4).add(new Lightbulb(100));
-            building.getRoom(4).add(new Lightbulb(150));
+            building.getRoom(4).add(new Lightbulb(100));
 
             building.getRoom(1).add(new Sofa("Потрясающий мягкий диван", 5, 9));
             building.getRoom(2).add(new Fridge("Современный холодный холодильник", 6));
@@ -37,7 +37,7 @@ public class Main {
             building.getRoom(4).add(new Cupboard("Шкафчик", 7));
             building.getRoom(4).change(new Cupboard("Шкафчик", 7), new Cupboard("Шкафище", 9));
             //building.getRoom(4).delete(new Lightbulb(150));
-            // building.getRoom(4).change(new Lightbulb(100),new Lightbulb(200));
+             building.getRoom(4).change(new Lightbulb(100),new Lightbulb(200));
             // building.deleteRoom(4);
             building.describe();
             building.validate();
