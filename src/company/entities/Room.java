@@ -124,9 +124,8 @@ public class Room implements RoomInterface {
 
     @Override
     public void validate() {
-        if ((!checkOccupancy()) || (!checkIllumination()) )
-        {
-            valid=false;
+        if ((!checkOccupancy()) || (!checkIllumination())) {
+            valid = false;
             try {
                 if (!checkOccupancy()) {
                     throw new SpaceUsageTooMuchException("Превышена допустимая заполненность помещения (более 70% площади) в комнате №" + number);
@@ -144,8 +143,9 @@ public class Room implements RoomInterface {
                 System.err.println(e.toString());
             }
 
+        } else {
+            valid = true;
         }
-        else {valid=true;}
     }
 
     @Override

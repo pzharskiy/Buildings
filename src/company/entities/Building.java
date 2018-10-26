@@ -81,14 +81,16 @@ public class Building implements BuildingInterface {
 //        valid = true;
 
         //В данном случае мы получим все нарушения
-        boolean someRoomIsInvalid=false;
+        boolean someRoomIsInvalid = false;
         for (Room room : rooms
                 ) {
             if (!room.isValid()) {
-                someRoomIsInvalid=true;
+                someRoomIsInvalid = true;
             }
         }
-        if (!someRoomIsInvalid) {valid = true;}
+        if (!someRoomIsInvalid) {
+            valid = true;
+        }
     }
 
     @Override
