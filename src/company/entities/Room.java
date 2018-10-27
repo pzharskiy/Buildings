@@ -97,7 +97,7 @@ public class Room implements RoomInterface {
     @Override
     public boolean checkIllumination() {
 
-        if (illumination <= 4000) {
+        if (illumination <= 4000 && illumination>=300) {
             return true;
         } else return false;
     }
@@ -135,11 +135,15 @@ public class Room implements RoomInterface {
             }
 
             try {
-                if (!checkIllumination()) {
+                if (illumination<300) {
 
-                    throw new IlluminanceTooMuchException("Превышена допустимая светимость в помещении (более 4000 лк) в комнате №" + number);
+                    throw new IlluminanceTooLittleException("Светимость ниже допустимлй в помещении (менее 300 лк) в комнате №" + number);
                 }
-            } catch (IlluminanceTooMuchException e) {
+                if (illumination>4000)
+                {
+                    throw new IlluminanceTooMuchException("Превышена допустимая светимость в помещении (более 4000 лк) в комнате №"+number);
+                }
+            } catch (IlluminanceTooMuchException | IlluminanceTooLittleException e) {
                 System.err.println(e.toString());
             }
 
