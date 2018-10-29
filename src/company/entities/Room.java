@@ -16,7 +16,7 @@ public class Room implements RoomInterface {
     private int windows;
     private int occupiedArea;
     private boolean valid;
-
+    /*Переменные для хранения списков мебели и лампочек*/
     private List<Furniture> furnitures = new ArrayList<Furniture>();
     private List<Lightbulb> lightbulbs = new ArrayList<Lightbulb>();
 
@@ -35,6 +35,7 @@ public class Room implements RoomInterface {
     public void add(Furniture furniture) {
 
         furnitures.add(furniture);
+        //Если мебель мягкая, то добавляем ее максимальные размеры, иначе - размеры твердой мебели
         if (furniture instanceof FoldingFurniture) occupiedArea += ((FoldingFurniture) furniture).getMaxSize();
         else occupiedArea += furniture.getSize();
     }
@@ -46,41 +47,55 @@ public class Room implements RoomInterface {
     }
 
     @Override
-    public void change(Furniture furniture, Furniture updateFurniture) throws LackOfFurnitureException {
-        if (furnitures.contains(furniture)) {
-            furnitures.set(furnitures.indexOf(furniture), updateFurniture);
-            furnitures.remove(furniture); //Удаляет дублирущиеся объекты
-        } else {
-            throw new LackOfFurnitureException("Запрашиваемый объект не найден или не существует");
+    public void change(Furniture furniture, Furniture updateFurniture) {
+        try {
+            if (furnitures.contains(furniture)) {
+                furnitures.set(furnitures.indexOf(furniture), updateFurniture);
+            } else {
+                throw new LackOfFurnitureException("Запрашиваемый объект не найден или не существует");
+            }
+        } catch (LackOfFurnitureException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void change(Lightbulb lightbulb, Lightbulb updateLightbulb) throws LackOfFurnitureException {
-        if (lightbulbs.contains(lightbulb)) {
+    public void change(Lightbulb lightbulb, Lightbulb updateLightbulb) {
+        try {
+            if (lightbulbs.contains(lightbulb)) {
 
-            lightbulbs.set(lightbulbs.indexOf(lightbulb), updateLightbulb);
-            //lightbulbs.remove(lightbulbs.indexOf(updateLightbulb)+1);
-        } else {
-            throw new LackOfLightbulbException("Запрашиваемый объект не найден или не существует");
+                lightbulbs.set(lightbulbs.indexOf(lightbulb), updateLightbulb);
+            } else {
+                throw new LackOfLightbulbException("Запрашиваемый объект не найден или не существует");
+            }
+        } catch (LackOfFurnitureException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(Furniture furniture) throws LackOfLightbulbException {
-        if (furnitures.contains(furniture)) {
-            furnitures.remove(furniture);
-        } else {
-            throw new LackOfFurnitureException("Запрашиваемый объект не найден или не существует");
+    public void delete(Furniture furniture) {
+        try {
+            if (furnitures.contains(furniture)) {
+                furnitures.remove(furniture); //Удаляет дублирущиеся объекты
+            } else {
+                throw new LackOfFurnitureException("Запрашиваемый объект не найден или не существует");
+            }
+        } catch (LackOfFurnitureException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(Lightbulb lightbulb) throws LackOfLightbulbException {
-        if (lightbulbs.contains(lightbulb)) {
-            lightbulbs.remove(lightbulb); //Удаляет дублирущиеся объекты
-        } else {
-            throw new LackOfLightbulbException("Запрашиваемый объект не найден или не существует");
+    public void delete(Lightbulb lightbulb) {
+        try {
+            if (lightbulbs.contains(lightbulb)) {
+                lightbulbs.remove(lightbulb); //Удаляет дублирущиеся объекты
+            } else {
+                throw new LackOfLightbulbException("Запрашиваемый объект не найден или не существует");
+            }
+        } catch (LackOfFurnitureException e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,7 +112,7 @@ public class Room implements RoomInterface {
     @Override
     public boolean checkIllumination() {
 
-        if (illumination <= 4000 && illumination>=300) {
+        if (illumination <= 4000 && illumination >= 300) {
             return true;
         } else return false;
     }
@@ -105,13 +120,6 @@ public class Room implements RoomInterface {
     @Override
     public void describe() {
         System.out.println("\tКомата №" + number);
-
-        /*int illumination = windows * 700;
-        for (Lightbulb bulb : lightbulbs
-                ) {
-            illumination += bulb.getIllumination();
-        }*/
-
         printLightbulds();
         System.out.print("\t\tПлощадь = " + square + " м^2 ");
         printFurnitures();
@@ -124,27 +132,28 @@ public class Room implements RoomInterface {
 
     @Override
     public void validate() {
+        /*Проверка заполненности и светимости*/
         if ((!checkOccupancy()) || (!checkIllumination())) {
+            /*Если нарушена хотя бы одно, то проверяется что именно и выбрасывается соответсвенное исключение*/
             valid = false;
             try {
                 if (!checkOccupancy()) {
                     throw new SpaceUsageTooMuchException("Превышена допустимая заполненность помещения (более 70% площади) в комнате №" + number);
                 }
             } catch (SpaceUsageTooMuchException e) {
-                System.err.println(e.toString());
+                e.printStackTrace();
             }
 
             try {
-                if (illumination<300) {
+                if (illumination < 300) {
 
-                    throw new IlluminanceTooLittleException("Светимость ниже допустимлй в помещении (менее 300 лк) в комнате №" + number);
+                    throw new IlluminanceTooLittleException("Светимость ниже допустимой в помещении (менее 300 лк) в комнате №" + number);
                 }
-                if (illumination>4000)
-                {
-                    throw new IlluminanceTooMuchException("Превышена допустимая светимость в помещении (более 4000 лк) в комнате №"+number);
+                if (illumination > 4000) {
+                    throw new IlluminanceTooMuchException("Превышена допустимая светимость в помещении (более 4000 лк) в комнате №" + number);
                 }
             } catch (IlluminanceTooMuchException | IlluminanceTooLittleException e) {
-                System.err.println(e.toString());
+                e.printStackTrace();
             }
 
         } else {
@@ -160,6 +169,7 @@ public class Room implements RoomInterface {
     }
 
     private void printFurnitures() {
+        /*Если мебели нет*/
         if (furnitures.isEmpty()) {
             System.out.println("(свободно 100%)");
             System.out.println("\t\tМебели нет");
@@ -181,13 +191,17 @@ public class Room implements RoomInterface {
                 ) {
 
             minSquare += furniture.getSize();
+            /*Если мебель - мягкая*/
             if (furniture instanceof FoldingFurniture) {
                 maxSquare += ((FoldingFurniture) furniture).getMaxSize();
-            } else {
+            }
+            /*Иначе*/
+            else {
                 maxSquare += furniture.getSize();
             }
 
         }
+        /*Если среди мебели присутствует мягкая, то */
         if (maxSquare > minSquare) {
             System.out.println(minSquare + "-" + maxSquare + " м^2, гарантировано свободно " + (square - maxSquare) + " м^2 или " + (100 * (square - maxSquare) / square) + "% площади)");
         } else

@@ -1,14 +1,26 @@
 package company.entities.furnitures;
 
 import company.Printable;
+import company.exceptions.InvalidSizeOfFurnitureException;
 
 public abstract class Furniture implements Printable{
     private int size;
     private String name;
 
-    public Furniture(String name, int size) {
-        this.name = name;
-        this.size = size;
+    public Furniture(String name, int size) throws InvalidSizeOfFurnitureException {
+        try
+        {
+            if (size>0) {
+                this.name = name;
+                this.size = size;
+            }
+            else throw new InvalidSizeOfFurnitureException("Размеры мебели должны быть положительным числом");
+        }
+        catch(InvalidSizeOfFurnitureException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     public int getSize() {

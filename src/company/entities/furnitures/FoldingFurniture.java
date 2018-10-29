@@ -1,11 +1,25 @@
 package company.entities.furnitures;
 
+import company.exceptions.InvalidSizeOfFurnitureException;
+
 public abstract class FoldingFurniture extends Furniture {
     private int maxSize;
 
     public FoldingFurniture(String name, int size, int maxSize) {
         super(name, size);
-        this.maxSize = maxSize;
+        try
+        {
+            if (maxSize<=0) {
+                throw new InvalidSizeOfFurnitureException("Размеры мебели должны быть положительным числом");
+            }
+            if (maxSize<size) {throw new InvalidSizeOfFurnitureException("Максимальные размеры мебели должны быть больше, чем размеры мебели в сложенном виде");}
+            else { this.maxSize = maxSize;}
+        }
+        catch(InvalidSizeOfFurnitureException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     public int getMaxSize() {

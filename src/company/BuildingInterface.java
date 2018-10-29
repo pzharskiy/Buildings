@@ -2,6 +2,7 @@ package company;
 
 import company.entities.Room;
 
+
 public interface BuildingInterface {
     int number = 0;
     String street = "Null";

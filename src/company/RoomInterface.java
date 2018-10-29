@@ -3,10 +3,7 @@ package company;
 
 import company.entities.Lightbulb;
 import company.entities.furnitures.Furniture;
-import company.exceptions.IlluminanceTooMuchException;
-import company.exceptions.LackOfFurnitureException;
-import company.exceptions.LackOfLightbulbException;
-import company.exceptions.SpaceUsageTooMuchException;
+
 
 public interface RoomInterface {
     int number = 0;
@@ -20,13 +17,13 @@ public interface RoomInterface {
 
     void add(Lightbulb lightbulb);
 
-    void change(Furniture furniture, Furniture updateFurniture) throws LackOfFurnitureException;
+    void change(Furniture furniture, Furniture updateFurniture);
 
-    void change(Lightbulb lightbulb, Lightbulb updateLightbulb) throws LackOfFurnitureException;
+    void change(Lightbulb lightbulb, Lightbulb updateLightbulb);
 
-    void delete(Furniture furniture) throws LackOfLightbulbException;
+    void delete(Furniture furniture);
 
-    void delete(Lightbulb lightbulb) throws LackOfLightbulbException;
+    void delete(Lightbulb lightbulb);
 
     void describe();
 
